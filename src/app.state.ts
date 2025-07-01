@@ -1,7 +1,12 @@
 import { saveData } from "./app.storage";
+import type { State } from "./types";
+
+type StateKey = keyof State;
+type StateValue<K extends StateKey> = State[K];
+type Observer = () => void;
 
 const stateService = (function () {
-    const state = {
+    const state : State = {
         editingAppointmentId: null,
         sortAppointmentsBy: null,
         isGridSelected: true,
@@ -9,34 +14,28 @@ const stateService = (function () {
     };
 
     // observers map, each key maps to array of callbacks
-    const observers = {};
+    const observers: { [K in StateKey]?: Observer[] } = {};
 
     // notify all observers when a key changes
-    function notifyObservers(key) {
-        if (observers[key]) {
-            observers[key].forEach(callback => callback());
-        }
+    function notifyObservers<K extends StateKey>(key: K): void {
+        observers[key]?.forEach((callback) => callback());
     }
 
     //setting state, triggers observers
-    function setState(key, value) {
-        const oldValue = state[key];
-        if (oldValue === value) return; 
-
+    function setState<K extends StateKey>(key: K, value: StateValue<K>): void {
+        if (state[key] === value) return;
         state[key] = value;
-
         saveData(key, value);
-
-        notifyObservers(key, value);
+        notifyObservers(key);
     }
 
     // returns current state value
-    function getState(key) {
+    function getState<K extends StateKey>(key: K): StateValue<K> {
         return state[key];
     }
 
     // state values mapped to functions to be triggered on change
-    function subscribe(key, callback) {
+    function subscribe<K extends StateKey>(key: K, callback: Observer): void {
         if (!observers[key]) {
             observers[key] = [];
         }

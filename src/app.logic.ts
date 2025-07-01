@@ -1,5 +1,3 @@
-import state from "./app.state";
-import { renderAppointmentList } from "./services/dom.service";
 import stateService from "./app.state";
 /**
  * Sort appointments based on a given criteria.
