@@ -9,7 +9,7 @@ export interface Appointment {
   purpose: string;
 }
 
-export type EditingAppointmentId = string | null
+export type EditingAppointmentId = number | null
 
 export type SortAppointmentsBy = string | null 
 

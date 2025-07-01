@@ -3,25 +3,27 @@ import stateService from "../app.state";
 import AppointmentList from "../components/AppointmentList";
 import Counter from "../components/Counter";
 import Modal from "../components/Modal";
+import type { Appointment } from "../types";
 
 /**
  * Clears all validation error messages.
  */
 function resetErrorMessages() {
-    document.querySelectorAll(".error-message").forEach(ele => ele.textContent = "");
+    document.querySelectorAll<HTMLElement>(".error-message").forEach(ele => ele.textContent = "");
 }
 
 /**
  * resets form fields
  */
 function resetFormFields(){
-    const form = document.getElementById("myForm")
-    form.querySelector("#name").value=""
-    form.querySelector("#email").value=""
-    form.querySelector("#date").value=""
-    form.querySelector("#doctor").value=""
-    form.querySelector("#slot").value=""
-    form.querySelector("#purpose").value=""
+    const form = document.getElementById("myForm") as HTMLFormElement | null
+    if(!form) return;
+    const fields = ["name", "email", "date", "doctor", "slot", "purpose"] as const;
+
+    fields.forEach(id => {
+        const input = form.querySelector<HTMLInputElement | HTMLSelectElement>(`#${id}`);
+        if (input) input.value = "";
+    });
 }
 
 /**
@@ -29,8 +31,9 @@ function resetFormFields(){
  * @param {string} message 
  * @param {string} type 
  */
-function showToast(message, type = "success") {
-    const toast = document.getElementById("toast-message");
+function showToast(message:string, type: "success" | "warning" | "error" = "success") {
+    const toast = document.getElementById("toast-message") as HTMLDivElement | null;
+    if(!toast) return;
     toast.textContent = message;
     toast.classList.remove("toast-hidden");
     toast.classList.add("toast-visible");
@@ -51,9 +54,10 @@ function showToast(message, type = "success") {
  * checks and udpdates available slots
  */
 function updateAvailableSlots() {
-    const dateEle = document.getElementById("date");
-    const doctorEle = document.getElementById("doctor");
-    const slotEle = document.getElementById("slot");
+    const dateEle = document.getElementById("date") as HTMLInputElement | null;
+    const doctorEle = document.getElementById("doctor") as HTMLSelectElement | null;
+    const slotEle = document.getElementById("slot") as HTMLElement | null;
+    if(!dateEle || !doctorEle || !slotEle) return;
     const date = dateEle.value;
     const doctorVal = doctorEle.value;
 
@@ -62,7 +66,7 @@ function updateAvailableSlots() {
 
     if (!date || !doctorVal) return;
 
-    const appointments = stateService.getState("appointments");
+    const appointments = stateService.getState("appointments") as Appointment[];
     const bookedSlots = appointments
         .filter(appointment => appointment.date === date && appointment.doctor === doctorVal && appointment.id !== stateService.getState("editingAppointmentId"))
         .map(appointment => appointment.slot);
@@ -94,25 +98,28 @@ function setMinDateForInput() {
     const day = String(today.getDate()).padStart(2, '0');
     const minDate = `${year}-${month}-${day}`;
 
-    document.getElementById("date").setAttribute("min", minDate);
+    const dateInput = document.getElementById("date");
+    if (dateInput) {
+        dateInput.setAttribute("min", minDate);
+    }
 }
 
 /**
  * Displays asterisk for required fields.
  */
-function markRequiredFields() {
-    Object.keys(VALIDATION_CONFIG).forEach(field => {
-        if (VALIDATION_CONFIG[field].includes("isRequired")) {
-            const label = document.getElementById(`required-${field}`);
-            if (label) label.textContent = '*';
-        }
-    });
+function markRequiredFields(): void {
+  Object.keys(VALIDATION_CONFIG).forEach((field) => {
+    if (VALIDATION_CONFIG[field as keyof typeof VALIDATION_CONFIG].includes("isRequired")) {
+      const label = document.getElementById(`required-${field}`);
+      if (label) label.textContent = '*';
+    }
+  });
 }
 
 /**
  * renders appointment list component locally
  */
-function renderAppointmentList() {
+function renderAppointmentList():void{
   const container = document.getElementById("appointment-list-container");
   if (!container) return;
   container.innerHTML = "";
@@ -122,7 +129,7 @@ function renderAppointmentList() {
 /**
  * renders counter
  */
-function renderCounter(){
+function renderCounter():void{
     const container = document.getElementById("counter-container");
     if(!container) return;
     container.innerHTML = "";
@@ -132,7 +139,7 @@ function renderCounter(){
 /**
  * renders the Modal component
  */
-function renderModal(message, callback) {
+function renderModal(message:string, callback: ()=>void):void{
     const modal = Modal(message, callback);
     document.body.appendChild(modal);
 }
