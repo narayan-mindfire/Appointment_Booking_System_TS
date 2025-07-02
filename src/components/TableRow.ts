@@ -1,8 +1,9 @@
 import stateService from "../app.state";
+import type { Appointment } from "../types";
 import { deleteAppointment } from "../utils/deleteAppointment";
 import { editAppointment } from "../utils/editAppointment";
 
-function TableRow(app){
+function TableRow(app : Appointment):HTMLElement{
   const row = document.createElement("tr");
     row.innerHTML = `
         <td>${app.name}</td>
@@ -16,8 +17,10 @@ function TableRow(app){
         </td>
     `;
     if(app.id === stateService.getState("editingAppointmentId")) row.classList.add("highlighted");
-    row.querySelector(".edit").addEventListener("click", () => editAppointment(app.id));
-    row.querySelector(".delete").addEventListener("click", () => deleteAppointment(app.id));
+    const editBtn = row.querySelector(".edit") as HTMLButtonElement
+    const deleteBtn = row.querySelector(".delete") as HTMLButtonElement
+    editBtn.addEventListener("click", () => editAppointment(app.id));
+    deleteBtn.addEventListener("click", () => deleteAppointment(app.id));
     return row;
 }
 

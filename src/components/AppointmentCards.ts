@@ -1,9 +1,8 @@
-import state from "../app.state";
 import { sortAppointments } from "../app.logic.js";
 import Card from "./Card.js";
 import stateService from "../app.state";
 
-function AppointmentCards() {
+function AppointmentCards() : HTMLElement{
   const container = document.createElement("div");
   container.id = "appointment-cards";
   container.className = "appointment-cards";

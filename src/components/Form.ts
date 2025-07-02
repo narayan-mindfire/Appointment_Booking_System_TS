@@ -3,7 +3,7 @@ import { showToast, resetErrorMessages, updateAvailableSlots, setMinDateForInput
 import { validationService } from "../services/validation.service";
 import stateService from "../app.state.js";
 
-function Form() {
+function Form():HTMLElement{
   const parent = document.createElement("div");
   parent.className = "form-container";
 
@@ -29,8 +29,9 @@ function Form() {
 
   const validators = validationService();
 
-  function renderDoctorOptions(list) {
+  function renderDoctorOptions(list : string[]) {
     const docList = parent.querySelector("#doc-options");
+    if(!docList) return;
     docList.innerHTML = "";
     list.forEach((doc) => {
       const option = document.createElement("div");
@@ -40,46 +41,48 @@ function Form() {
     });
   }
 
-  function setDoctors() {
-    const docList = parent.querySelector("#doc-options");
-    const doctorInput = parent.querySelector("#doctor");
-
+  const setDoctors = () => {
+    const docList = parent.querySelector("#doc-options") as HTMLElement;
+    const doctorInput = parent.querySelector("#doctor") as HTMLElement;
+    if(!docList || !doctorInput) return ;
     renderDoctorOptions(DOCS);
 
-    doctorInput.addEventListener("input", function () {
+    doctorInput.addEventListener("input",  (event) => {
+      const inputValue = (event.target as HTMLInputElement).value;
       const filtered = DOCS.filter((doc) =>
-        doc.toLowerCase().includes(this.value.toLowerCase())
+        doc.toLowerCase().includes(inputValue.toLowerCase())
       );
       docList.style.display = "block";
       renderDoctorOptions(filtered);
     });
 
     docList.addEventListener("click", function (e) {
-      if (e.target.classList.contains("doctor-option")) {
-        doctorInput.value = e.target.textContent;
+      const target = e.target as HTMLElement | null;
+      if (target && target.classList.contains("doctor-option")) {
+        (doctorInput as HTMLInputElement).value = target.textContent || "";
         updateAvailableSlots();
         docList.style.display = "none";
       }
     });
   }
 
-  function handleForm(e) {
+  function handleForm(e : Event) {
     e.preventDefault();
 
     const fields = {
-      name: parent.querySelector("#name").value.trim(),
-      email: parent.querySelector("#email").value.trim(),
-      date: parent.querySelector("#date").value,
-      doctor: parent.querySelector("#doctor").value,
-      slot: parent.querySelector("#slot").value,
-      purpose: parent.querySelector("#purpose").value.trim(),
+      name: (parent.querySelector("#name") as HTMLInputElement | null)?.value.trim() || "",
+      email: (parent.querySelector("#email") as HTMLInputElement | null)?.value.trim() || "",
+      date: (parent.querySelector("#date") as HTMLInputElement | null)?.value || "",
+      doctor: (parent.querySelector("#doctor") as HTMLInputElement | null)?.value || "",
+      slot: (parent.querySelector("#slot") as HTMLSelectElement | null)?.value || "",
+      purpose: (parent.querySelector("#purpose") as HTMLInputElement | null)?.value.trim() || "",
     };
 
     resetErrorMessages();
 
     let isValid = true;
 
-    for (const key in fields) {
+    for (const key of Object.keys(fields) as (keyof typeof fields)[]) {
       const rules = VALIDATION_CONFIG[key] || [];
       for (const rule of rules) {
         const validate = validators[rule];
@@ -103,7 +106,8 @@ function Form() {
       if (idx !== -1) {
         updatedAppointments[idx] = { id: editingAppointmentId, ...fields };
         stateService.setState("editingAppointmentId", null)
-        parent.querySelector("#submit").value = ("Book Appointment");
+        const submitBtn = parent.querySelector("#submit") as HTMLButtonElement | null
+        if(submitBtn) submitBtn.value = ("Book Appointment");
       }
     } else {
       updatedAppointments.push({ id: Date.now(), ...fields });
@@ -121,10 +125,10 @@ function Form() {
   }, 0);
 
   // Listeners
-  const formEl = parent.querySelector("form");
-  const dateEle = parent.querySelector("#date");
-  const doctorEle = parent.querySelector("#doctor");
-  const docOptions = parent.querySelector("#doc-options");
+  const formEl = parent.querySelector("form") as HTMLElement;
+  const dateEle = parent.querySelector("#date") as HTMLElement;
+  const doctorEle = parent.querySelector("#doctor") as HTMLElement;
+  const docOptions = parent.querySelector("#doc-options") as HTMLElement;
 
   formEl.addEventListener("submit", handleForm);
   dateEle.addEventListener("change", updateAvailableSlots);
@@ -133,8 +137,8 @@ function Form() {
     docOptions.style.display = "block";
   });
 
-  document.addEventListener("click", (e) => {
-    if (!doctorEle.contains(e.target) && !docOptions.contains(e.target)) {
+  document.addEventListener("click", (e : Event) => {
+    if (!doctorEle.contains(e.target as Node) && !docOptions.contains(e.target as Node)) {
       docOptions.style.display = "none";
     }
   });

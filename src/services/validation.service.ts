@@ -3,7 +3,7 @@
  * @returns function isRequired and function isEmailFormat
  */
 const validationService = () => {
-  function isRequired(value, key) {
+  function isRequired(value:string, key:string) {
     let res = (value.trim() !== "");
     if (!res) {
       const errorElement = document.getElementById(`${key}-error`);
@@ -12,7 +12,7 @@ const validationService = () => {
     return res;
   };
 
-  function isEmailFormat(value, key) {
+  function isEmailFormat(value:string, key:string) {
     const res = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
     if (!res) {
         const errorElement = document.getElementById(`${key}-error`);

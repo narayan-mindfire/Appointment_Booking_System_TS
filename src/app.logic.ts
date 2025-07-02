@@ -1,11 +1,12 @@
 import stateService from "./app.state";
+import type { Appointment, SortAppointmentsBy } from "./types";
 /**
  * Sort appointments based on a given criteria.
  * @param {Array} appointments - The list of appointments to sort.
  * @param {string} sortBy - The sorting key 
  * @returns {Array} - Sorted appointment array.
  */
-function sortAppointments(appointments, sortBy) {
+function sortAppointments(appointments : Appointment[], sortBy : SortAppointmentsBy) {
   const sorted = [...appointments]; 
 
   switch (sortBy) {
@@ -32,8 +33,11 @@ function sortAppointments(appointments, sortBy) {
   return sorted;
 }
 
-function sortSetter(event) {
-    stateService.setState("sortAppointmentsBy", event.target.value)
+function sortSetter(event : Event) {
+    const target = event.target as HTMLInputElement | null;
+    if (target) {
+        stateService.setState("sortAppointmentsBy", target.value);
+    }
 }
 
 export { sortAppointments, sortSetter };

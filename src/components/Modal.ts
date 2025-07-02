@@ -1,5 +1,5 @@
 // Custom Modal component
-function Modal(message, callback){
+function Modal(message : string, callback:()=>void){
     console.log("modal rendered")
     const modal = document.createElement("div")
     modal.id = "myModal"

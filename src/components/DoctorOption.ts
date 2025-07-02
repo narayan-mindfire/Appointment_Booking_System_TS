@@ -1,4 +1,4 @@
-function DoctorOption(doc){
+function DoctorOption(doc : string):HTMLElement{
     const div = document.createElement("div");
     div.textContent = doc;
     div.className = "doctor-option";

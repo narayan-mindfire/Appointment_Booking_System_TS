@@ -1,6 +1,6 @@
 import stateService from "../app.state";
 
-function Counter(){
+function Counter():HTMLElement{
     console.log("counter rendered")
     const counter = document.createElement("div");
     counter.className = "head-area";

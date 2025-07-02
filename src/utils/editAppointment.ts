@@ -5,7 +5,7 @@ import { resetErrorMessages, showToast, updateAvailableSlots } from "../services
  * Loads appointment data into form for editing.
  * @param {number} id - Appointment ID
  */
-export function editAppointment(id) {
+export function editAppointment(id:number) {
     window.scrollTo({
         top: 0,
         left: 0,
@@ -20,9 +20,9 @@ export function editAppointment(id) {
     stateService.setState("editingAppointmentId", id);
 
     document.querySelectorAll(".appointment-card").forEach(card => {
-        const cardName = card.querySelector(".patient-name")?.textContent.trim();
-        const cardDate = card.querySelector(".detail-item:nth-child(1) .detail-value")?.textContent.trim();
-        const cardTime = card.querySelector(".detail-item:nth-child(2) .detail-value")?.textContent.trim();
+        const cardName = card.querySelector(".patient-name")?.textContent?.trim() || "";
+        const cardDate = card.querySelector(".detail-item:nth-child(1) .detail-value")?.textContent?.trim();
+        const cardTime = card.querySelector(".detail-item:nth-child(2) .detail-value")?.textContent?.trim();
 
         if (
             cardName === appointment.name &&
@@ -37,10 +37,10 @@ export function editAppointment(id) {
 
     document.querySelectorAll("#appointment-table-body tr").forEach(row => {
         const cells = row.getElementsByTagName("td");
-        const name = cells[0]?.textContent.trim();
-        const doctor = cells[1]?.textContent.trim();
-        const date = cells[2]?.textContent.trim();
-        const slot = cells[3]?.textContent.trim();
+        const name = cells[0]?.textContent?.trim() || "";
+        const doctor = cells[1]?.textContent?.trim() || "";
+        const date = cells[2]?.textContent?.trim() || "";
+        const slot = cells[3]?.textContent?.trim() || "";
 
         if (
             name === appointment.name &&
@@ -55,14 +55,30 @@ export function editAppointment(id) {
     });
 
     // pre-fill form
-    document.getElementById("name").value = appointment.name;
-    document.getElementById("email").value = appointment.email;
-    document.getElementById("date").value = appointment.date;
-    document.getElementById("doctor").value = appointment.doctor;
+    const nameInput = document.getElementById("name") as HTMLInputElement | null;
+    if (nameInput) nameInput.value = appointment.name;
+
+    const emailInput = document.getElementById("email") as HTMLInputElement | null;
+    if (emailInput) emailInput.value = appointment.email;
+
+    const dateInput = document.getElementById("date") as HTMLInputElement | null;
+    if (dateInput) dateInput.value = appointment.date;
+
+    const doctorInput = document.getElementById("doctor") as HTMLInputElement | null;
+    if (doctorInput) doctorInput.value = appointment.doctor;
+
     updateAvailableSlots(); 
-    document.getElementById("slot").value = appointment.slot;
-    document.getElementById("purpose").value = appointment.purpose;
+
+    const slotInput = document.getElementById("slot") as HTMLInputElement | null;
+    if (slotInput) slotInput.value = appointment.slot;
+
+    const purposeInput = document.getElementById("purpose") as HTMLInputElement | null;
+    if (purposeInput) purposeInput.value = appointment.purpose;
 
     resetErrorMessages();
-    document.getElementById("myForm").querySelector("#submit").value = "Update Appointment";
+    const form = document.getElementById("myForm");
+    const submitBtn = form?.querySelector<HTMLInputElement>("#submit");
+    if (submitBtn) {
+        submitBtn.value = "Update Appointment";
+    }
 }

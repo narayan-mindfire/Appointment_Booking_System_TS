@@ -1,4 +1,4 @@
-function Toast(){
+function Toast():HTMLElement{
     const toast = document.createElement("div")
     toast.className = "toast-hidden";
     toast.id = "toast-message";

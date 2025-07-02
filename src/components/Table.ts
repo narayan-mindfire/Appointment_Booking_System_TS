@@ -2,7 +2,7 @@ import { sortAppointments } from "../app.logic"
 import stateService from "../app.state"
 import TableRow from "./TableRow"
 
-function Table(){
+function Table():HTMLElement{
     const table = document.createElement("table")
     table.classList.add('appointment-table')
     table.id = "appointment-table"

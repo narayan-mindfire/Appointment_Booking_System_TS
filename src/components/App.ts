@@ -8,7 +8,7 @@ import {editAppointment} from "../utils/editAppointment.js";
 
 export function renderApp() {
     console.log("starting app")
-    const root = document.getElementById('app');
+    const root = document.getElementById('app') as HTMLElement;
     root.innerHTML = ''; 
     
 

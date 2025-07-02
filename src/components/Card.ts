@@ -1,8 +1,9 @@
 import stateService from "../app.state";
+import type { Appointment } from "../types";
 import { deleteAppointment } from "../utils/deleteAppointment";
 import { editAppointment } from "../utils/editAppointment";
 
-function Card(app){
+function Card(app : Appointment) : HTMLElement{
     const card = document.createElement("div");
     card.className = "appointment-card";
 
@@ -32,8 +33,14 @@ function Card(app){
         </div>
     `;
     if(app.id === stateService.getState("editingAppointmentId")) card.classList.add("highlighted");
-    card.querySelector(".edit").addEventListener("click", () => editAppointment(app.id));
-    card.querySelector(".delete").addEventListener("click", () => deleteAppointment(app.id));
+    const editBtn = card.querySelector(".edit");
+    if (editBtn) {
+        editBtn.addEventListener("click", () => editAppointment(app.id));
+    }
+    const deleteBtn = card.querySelector(".delete");
+    if (deleteBtn) {
+        deleteBtn.addEventListener("click", () => deleteAppointment(app.id));
+    }
     return card;
 }
 

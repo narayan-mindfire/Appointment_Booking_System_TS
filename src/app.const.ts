@@ -10,8 +10,7 @@ const VALIDATION_CONFIG : Record<string, ValidationRule[]> = {
 }
 
 // doctor list
-type Doctor = string;
-const DOCS: Doctor[] = [
+const DOCS = [
   "Aarya Sharma",
   "Rohan Mehta",
   "Meera Nair",

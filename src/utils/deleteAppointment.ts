@@ -5,7 +5,7 @@ import { renderModal, showToast } from "../services/dom.service";
  * @param {string} id 
  * @returns 
  */
-export function deleteAppointment(id) {
+export function deleteAppointment(id:number) {
     renderModal("Are you sure you want to delete this appointment?", () => {
         let updatedAppointments = [...stateService.getState("appointments")];
         updatedAppointments = updatedAppointments.filter(app => app.id !== id);
