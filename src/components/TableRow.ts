@@ -1,7 +1,6 @@
 import stateService from "../app.state";
+import { deleteAppointment, editAppointment } from "../services/dom.service";
 import type { Appointment } from "../types";
-import { deleteAppointment } from "../utils/deleteAppointment";
-import { editAppointment } from "../utils/editAppointment";
 
 function TableRow(app : Appointment):HTMLElement{
   const row = document.createElement("tr");

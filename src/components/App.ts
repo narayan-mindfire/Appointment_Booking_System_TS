@@ -3,8 +3,8 @@ import MainHeading from "./MainHeading";
 import ContentBody from "./ContentBody";
 import Toast from "./Toast";
 import stateService from "../app.state";
-import { renderAppointmentList, renderCounter } from "../services/dom.service";
-import {editAppointment} from "../utils/editAppointment.js";
+import { editAppointment, renderAppointmentList, renderCounter } from "../services/dom.service";
+
 
 export function renderApp() {
     console.log("starting app")
