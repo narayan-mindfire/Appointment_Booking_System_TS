@@ -1,5 +1,6 @@
 // configuration for form validation: array for each field will contain the validation that field will go through
-const VALIDATION_CONFIG = {
+export type ValidationRule = "isRequired" | "isEmailFormat";
+const validationConfig : Record<string, ValidationRule[]> = {
     "name": ["isRequired"],
     "email": ["isRequired", "isEmailFormat"],
     "date": ["isRequired"],
@@ -9,7 +10,7 @@ const VALIDATION_CONFIG = {
 }
 
 // doctor list
-const DOCS = [
+const docs = [
   "Aarya Sharma",
   "Rohan Mehta",
   "Meera Nair",
@@ -33,6 +34,7 @@ const DOCS = [
 ];
 
 // global variables
-const SLOTS = ["10:00", "11:00", "12:00", "1:00"];
+type slot = "10:00"| "11:00"| "12:00"| "1:00"
+const slots : slot[]= ["10:00", "11:00", "12:00", "1:00"];
 
-export { VALIDATION_CONFIG, DOCS, SLOTS };
+export { validationConfig, docs, slots };
