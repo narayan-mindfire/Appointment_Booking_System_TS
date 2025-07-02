@@ -1,6 +1,6 @@
 import stateService from "../app.state";
 
-function Counter():HTMLElement{
+function counter():HTMLElement{
     console.log("counter rendered")
     const counter = document.createElement("div");
     counter.className = "head-area";
@@ -10,4 +10,4 @@ function Counter():HTMLElement{
     `
     return counter;
 }
-export default Counter
+export default counter

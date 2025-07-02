@@ -1,15 +1,15 @@
-import AppointmentList from "./AppointmentList"
-import Form from "./Form"
+import appointmentList from "./AppointmentList"
+import form from "./Form"
 
-function ContentBody():HTMLElement{
+function contentBody():HTMLElement{
     const parent = document.createElement("div");
     parent.className = "content";
-    parent.appendChild(Form());
+    parent.appendChild(form());
     const appointmetnListContainer = document.createElement('div');
     appointmetnListContainer.id = "appointment-list-container";
-    appointmetnListContainer.appendChild(AppointmentList());
+    appointmetnListContainer.appendChild(appointmentList());
     parent.appendChild((appointmetnListContainer));
     return parent
 }
 
-export default ContentBody
+export default contentBody

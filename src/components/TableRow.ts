@@ -2,7 +2,7 @@ import stateService from "../app.state";
 import { deleteAppointment, editAppointment } from "../services/dom.service";
 import type { Appointment } from "../types";
 
-function TableRow(app : Appointment):HTMLElement{
+function tableRow(app : Appointment):HTMLElement{
   const row = document.createElement("tr");
     row.innerHTML = `
         <td>${app.name}</td>
@@ -23,4 +23,4 @@ function TableRow(app : Appointment):HTMLElement{
     return row;
 }
 
-export default TableRow
+export default tableRow

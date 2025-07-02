@@ -1,8 +1,8 @@
-import { sortAppointments } from "../app.logic.js";
-import Card from "./Card.js";
+import { sortAppointments } from "../app.logic.ts";
+import card from "./Card.ts";
 import stateService from "../app.state";
 
-function AppointmentCards() : HTMLElement{
+function appointmentCards() : HTMLElement{
   const container = document.createElement("div");
   container.id = "appointment-cards";
   container.className = "appointment-cards";
@@ -14,11 +14,11 @@ function AppointmentCards() : HTMLElement{
   }
 
   for (const app of appointments) {
-        const card = Card(app);
-        container.appendChild(card);
+        const cardElement:HTMLElement = card(app);
+        container.appendChild(cardElement);
     }
 
   return container;
 }
 
-export default AppointmentCards;
+export default appointmentCards;

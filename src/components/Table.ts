@@ -1,8 +1,8 @@
 import { sortAppointments } from "../app.logic"
 import stateService from "../app.state"
-import TableRow from "./TableRow"
+import tableRow from "./TableRow"
 
-function Table():HTMLElement{
+function table():HTMLElement{
     const table = document.createElement("table")
     table.classList.add('appointment-table')
     table.id = "appointment-table"
@@ -29,7 +29,7 @@ function Table():HTMLElement{
         appointments = sortAppointments(appointments, sortAppointmentsBy);
     }
     for (const app of appointments) {
-        const row = TableRow(app);
+        const row = tableRow(app);
         tableBody.appendChild(row);
     }
 
@@ -43,4 +43,4 @@ function Table():HTMLElement{
     return table
 }
 
-export default Table
+export default table

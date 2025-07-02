@@ -2,7 +2,7 @@ import stateService from "../app.state";
 import { deleteAppointment, editAppointment } from "../services/dom.service";
 import type { Appointment } from "../types";
 
-function Card(app : Appointment) : HTMLElement{
+function card(app : Appointment) : HTMLElement{
     const card = document.createElement("div");
     card.className = "appointment-card";
 
@@ -43,4 +43,4 @@ function Card(app : Appointment) : HTMLElement{
     return card;
 }
 
-export default Card;
+export default card;

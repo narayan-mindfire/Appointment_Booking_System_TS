@@ -1,9 +1,9 @@
 import { sortSetter } from "../app.logic";
 import stateService from "../app.state";
-import AppointmentCards from "./AppointmentCards";
-import Table from "./Table";
+import appointmentCards from "./AppointmentCards";
+import table from "./Table";
 
-function AppointmentList() :HTMLElement{
+function appointmentList() :HTMLElement{
   console.log("appointmentlist rendered")
   const parent = document.createElement("div");
   parent.className = "appointment-list";
@@ -50,11 +50,11 @@ function AppointmentList() :HTMLElement{
   const isGridSelected = stateService.getState("isGridSelected");
   
   if (isGridSelected) {
-    parent.appendChild(AppointmentCards());
+    parent.appendChild(appointmentCards());
     btnHalf.style.backgroundColor = "#c5c4c4";
     btnFull.style.backgroundColor = "#fff";
   } else {
-    parent.appendChild(Table());
+    parent.appendChild(table());
     btnHalf.style.backgroundColor = "#fff";
     btnFull.style.backgroundColor = "#c5c4c4";
   }
@@ -71,4 +71,4 @@ function AppointmentList() :HTMLElement{
   return parent;
 }
 
-export default AppointmentList;
+export default appointmentList;

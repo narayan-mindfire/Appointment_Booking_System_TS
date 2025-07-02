@@ -1,9 +1,9 @@
-import Counter from "./Counter";
-import MainHeading from "./MainHeading";
-import ContentBody from "./ContentBody";
-import Toast from "./Toast";
+import counter from "./Counter";
+import mainHeading from "./MainHeading";
+import contentBody from "./ContentBody";
+import toast from "./Toast";
 import stateService from "../app.state";
-import { editAppointment, renderAppointmentList, renderCounter } from "../services/dom.service";
+import { editAppointment, renderappointmentList, renderCounter } from "../services/dom.service";
 
 
 export function renderApp() {
@@ -15,13 +15,13 @@ export function renderApp() {
     const layout = document.createElement('div');
     layout.className = 'app';
 
-    layout.appendChild(Toast())
-    layout.appendChild(MainHeading());
+    layout.appendChild(toast())
+    layout.appendChild(mainHeading());
     const counterContainer = document.createElement('div');
     counterContainer.id = "counter-container";
-    counterContainer.appendChild(Counter())
+    counterContainer.appendChild(counter())
     layout.appendChild(counterContainer);
-    layout.appendChild(ContentBody())
+    layout.appendChild(contentBody())
 
     root.appendChild(layout);
     const editingAppointmentId = stateService.getState("editingAppointmentId")
@@ -29,11 +29,11 @@ export function renderApp() {
 
     // mapping state values to functions to trigger upon change
     stateService.subscribe('appointments', () => {
-        renderAppointmentList();
+        renderappointmentList();
         renderCounter();
     });
 
-    stateService.subscribe('isGridSelected', renderAppointmentList);
+    stateService.subscribe('isGridSelected', renderappointmentList);
 
-    stateService.subscribe('sortAppointmentsBy', renderAppointmentList)
+    stateService.subscribe('sortAppointmentsBy', renderappointmentList)
 }

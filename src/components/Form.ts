@@ -1,9 +1,9 @@
-import { DOCS, VALIDATION_CONFIG } from "../app.const";
+import { docs, validationConfig } from "../app.const";
 import { showToast, resetErrorMessages, updateAvailableSlots, setMinDateForInput, markRequiredFields, resetFormFields} from "../services/dom.service";
 import { validationService } from "../services/validation.service";
 import stateService from "../app.state.js";
 
-function Form():HTMLElement{
+function form():HTMLElement{
   const parent = document.createElement("div");
   parent.className = "form-container";
 
@@ -45,11 +45,11 @@ function Form():HTMLElement{
     const docList = parent.querySelector("#doc-options") as HTMLElement;
     const doctorInput = parent.querySelector("#doctor") as HTMLElement;
     if(!docList || !doctorInput) return ;
-    renderDoctorOptions(DOCS);
+    renderDoctorOptions(docs);
 
     doctorInput.addEventListener("input",  (event) => {
       const inputValue = (event.target as HTMLInputElement).value;
-      const filtered = DOCS.filter((doc) =>
+      const filtered = docs.filter((doc) =>
         doc.toLowerCase().includes(inputValue.toLowerCase())
       );
       docList.style.display = "block";
@@ -83,7 +83,7 @@ function Form():HTMLElement{
     let isValid = true;
 
     for (const key of Object.keys(fields) as (keyof typeof fields)[]) {
-      const rules = VALIDATION_CONFIG[key] || [];
+      const rules = validationConfig[key] || [];
       for (const rule of rules) {
         const validate = validators[rule];
         if (validate && !validate(fields[key], key)) {
@@ -146,4 +146,4 @@ function Form():HTMLElement{
   return parent;
 }
 
-export default Form;
+export default form;

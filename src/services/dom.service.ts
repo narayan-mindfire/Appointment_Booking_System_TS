@@ -1,8 +1,8 @@
-import { SLOTS, VALIDATION_CONFIG } from "../app.const";
+import { slots, validationConfig } from "../app.const";
 import stateService from "../app.state";
-import AppointmentList from "../components/AppointmentList";
-import Counter from "../components/Counter";
-import Modal from "../components/Modal";
+import appointmentList from "../components/AppointmentList";
+import counter from "../components/Counter";
+import modal from "../components/Modal";
 import type { Appointment } from "../types";
 
 /**
@@ -75,7 +75,7 @@ function updateAvailableSlots() {
     const selectedDate = new Date(date);
     const isToday = today.toDateString() === selectedDate.toDateString();
 
-    SLOTS.forEach(slot => {
+    slots.forEach(slot => {
         const slotHour = Number(slot.split(":")[0]);
         const isDisabled = bookedSlots.includes(slot) || (isToday && slotHour <= today.getHours());
 
@@ -108,8 +108,8 @@ function setMinDateForInput() {
  * Displays asterisk for required fields.
  */
 function markRequiredFields(): void {
-  Object.keys(VALIDATION_CONFIG).forEach((field) => {
-    if (VALIDATION_CONFIG[field as keyof typeof VALIDATION_CONFIG].includes("isRequired")) {
+  Object.keys(validationConfig).forEach((field) => {
+    if (validationConfig[field as keyof typeof validationConfig].includes("isRequired")) {
       const label = document.getElementById(`required-${field}`);
       if (label) label.textContent = '*';
     }
@@ -119,11 +119,11 @@ function markRequiredFields(): void {
 /**
  * renders appointment list component locally
  */
-function renderAppointmentList():void{
+function renderappointmentList():void{
   const container = document.getElementById("appointment-list-container");
   if (!container) return;
   container.innerHTML = "";
-  container.appendChild(AppointmentList());
+  container.appendChild(appointmentList());
 }
 
 /**
@@ -133,15 +133,15 @@ function renderCounter():void{
     const container = document.getElementById("counter-container");
     if(!container) return;
     container.innerHTML = "";
-    container.appendChild(Counter());
+    container.appendChild(counter());
 }
 
 /**
  * renders the Modal component
  */
 function renderModal(message:string, callback: ()=>void):void{
-    const modal = Modal(message, callback);
-    document.body.appendChild(modal);
+    const modalElement = modal(message, callback);
+    document.body.appendChild(modalElement);
 }
 
 /**
@@ -240,4 +240,4 @@ function editAppointment(id:number) {
     }
 }
 
-export {resetErrorMessages, showToast, updateAvailableSlots, markRequiredFields, setMinDateForInput, renderAppointmentList, resetFormFields, renderCounter, renderModal, deleteAppointment, editAppointment}
+export {resetErrorMessages, showToast, updateAvailableSlots, markRequiredFields, setMinDateForInput, renderappointmentList, resetFormFields, renderCounter, renderModal, deleteAppointment, editAppointment}
