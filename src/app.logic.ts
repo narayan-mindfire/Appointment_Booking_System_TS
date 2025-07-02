@@ -7,7 +7,7 @@ import type { Appointment, SortAppointmentsBy } from "./types";
  * @returns {Array} - Sorted appointment array.
  */
 function sortAppointments(appointments : Appointment[], sortBy : SortAppointmentsBy):Appointment[] {
-  const sorted = [...appointments]; 
+  const sorted : Appointment[]= [...appointments]; 
 
   switch (sortBy) {
     case "date":
