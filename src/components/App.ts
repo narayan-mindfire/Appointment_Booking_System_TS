@@ -10,24 +10,27 @@ export function renderApp() {
     console.log("starting app")
     const root = document.getElementById('app') as HTMLElement;
     root.innerHTML = ''; 
-    
 
     const layout = document.createElement('div');
     layout.className = 'app';
 
     layout.appendChild(toast())
     layout.appendChild(mainHeading());
+
     const counterContainer = document.createElement('div');
     counterContainer.id = "counter-container";
-    counterContainer.appendChild(counter())
+    counterContainer.appendChild(counter());
     layout.appendChild(counterContainer);
-    layout.appendChild(contentBody())
+    
+    layout.appendChild(contentBody());
 
     root.appendChild(layout);
-    const editingAppointmentId = stateService.getState("editingAppointmentId")
-    if(editingAppointmentId) editAppointment(editingAppointmentId)
+
+    const editingAppointmentId = stateService.getState("editingAppointmentId");
+    if(editingAppointmentId) editAppointment(editingAppointmentId);
 
     // mapping state values to functions to trigger upon change
+
     stateService.subscribe('appointments', () => {
         renderappointmentList();
         renderCounter();

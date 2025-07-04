@@ -1,4 +1,3 @@
-marker 
 import stateService from "../app.state";
 import { deleteAppointment, editAppointment } from "../services/dom.service";
 import type { Appointment } from "../types";
