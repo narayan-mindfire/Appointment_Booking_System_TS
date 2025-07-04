@@ -1,3 +1,4 @@
+// main heading component
 function mainHeading() : HTMLElement{
   const h1 = document.createElement("h1");
   h1.className = "main-heading";

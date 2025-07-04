@@ -29,6 +29,10 @@ function form():HTMLElement{
 
   const validators = validationService();
 
+  /**
+   * function to display a list of available doctors
+   * @param list doctor list to show
+   */
   function renderDoctorOptions(list : string[]) {
     const docList = parent.querySelector("#doc-options");
     if(!docList) return;
@@ -41,6 +45,9 @@ function form():HTMLElement{
     });
   }
 
+  /**
+   * function marks doctor availability
+   */
   const setDoctors = () => {
     const docList = parent.querySelector("#doc-options") as HTMLElement;
     const doctorInput = parent.querySelector("#doctor") as HTMLElement;
@@ -66,6 +73,10 @@ function form():HTMLElement{
     });
   }
 
+  /**
+   * function handling form submission, includes validation
+   * @param e submit event
+   */
   function handleForm(e : Event) {
     e.preventDefault();
 
